@@ -295,14 +295,7 @@ network_installer
 # Configuring /etc/mkinitcpio.conf.
 info_print "Configuring /etc/mkinitcpio.conf."
 cat > /mnt/etc/mkinitcpio.conf <<EOF
-HOOKS=(systemd autodetect keyboard keymap sd-vconsole modconf block encrypt filesystems)
-
-
-new HOOKS=(base keyboard udev autodetect modconf block keymap encrypt btrfs filesystems resume)
-EOF
-
-# Setting up systemd-boot.
-
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf kms block encrypt filesystems fsck)
 
 # Configuring the system.
 info_print "Configuring the system (timezone, system clock, initramfs, Snapper, GRUB)."
@@ -337,11 +330,9 @@ arch-chroot /mnt /bin/bash -e <<EOF
     echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
     echo "initrd /intel-ucode.img" >> /boot/loader/entries/arch.conf
     echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-    echo "options cryptdevice=UUID=$(blkid -s UUID -o value /dev/nvme0n1p2):luks:allow-discards root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep" >> /boot/loader/entries/arch.conf
-
+    echo "options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep" >> /boot/loader/entries/arch.conf
 
     touch /boot/loader/loader.conf
-
     echo "default arch" >> /boot/loader/loader.conf
 
 EOF
