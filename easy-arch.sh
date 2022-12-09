@@ -359,7 +359,7 @@ microcode_detector
 
 # Pacstrap (setting up a base sytem onto the new root).
 info_print "Installing the base system (it may take a while)."
-pacstrap /mnt base "$kernel" "$microcode" linux-firmware "$kernel"-headers btrfs-progs grub grub-btrfs rsync efibootmgr snapper reflector snap-pac zram-generator sudo &>/dev/null
+pacstrap /mnt base "$kernel" "$microcode" linux-firmware "$kernel"-headers btrfs-progs rsync efibootmgr snapper reflector snap-pac zram-generator sudo &>/dev/null
 
 # Setting up the hostname.
 echo "$hostname" > /mnt/etc/hostname
@@ -393,10 +393,8 @@ cat > /mnt/etc/mkinitcpio.conf <<EOF
 HOOKS=(systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems)
 EOF
 
-# Setting up LUKS2 encryption in grub.
-info_print "Setting up grub config."
-UUID=$(blkid -s UUID -o value $CRYPTROOT)
-sed -i "\,^GRUB_CMDLINE_LINUX=\"\",s,\",&rd.luks.name=$UUID=cryptroot root=$BTRFS," /mnt/etc/default/grub
+# Setting up systemd-boot.
+
 
 # Configuring the system.
 info_print "Configuring the system (timezone, system clock, initramfs, Snapper, GRUB)."
@@ -423,11 +421,19 @@ arch-chroot /mnt /bin/bash -e <<EOF
     mount -a &>/dev/null
     chmod 750 /.snapshots
 
-    # Installing GRUB.
-    grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB &>/dev/null
+    # Installing systemd-boot.
+    bootctl --path=/boot install
 
-    # Creating grub config file.
-    grub-mkconfig -o /boot/grub/grub.cfg &>/dev/null
+    touch /boot/loader/entries/arch.conf
+    title Arch Linux >> /boot/loader/entries/arch.conf
+    linux /vmlinuz-linux >> /boot/loader/entries/arch.conf
+    initrd /intel-ucode.img >> /boot/loader/entries/arch.conf
+    initrd /initramfs-linux.img >> /boot/loader/entries/arch.conf
+    options cryptdevice=UUID=UUID_FROM_ABOVE:luks:allow-discards root=/dev/mapper/luks rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep >> /boot/loader/entries/arch.conf
+
+    touch /boot/loader/loader.conf
+
+    default arch >> /boot/loader/loader.conf
 
 EOF
 
