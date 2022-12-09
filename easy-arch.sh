@@ -1,5 +1,7 @@
 #!/usr/bin/env -S bash -e
 
+set -x
+
 # Fixing annoying issue that breaks GitHub Actions
 # shellcheck disable=SC2001
 
