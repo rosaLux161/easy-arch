@@ -429,7 +429,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
     echo "initrd /intel-ucode.img" >> /boot/loader/entries/arch.conf
     echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-    echo "options cryptdevice=UUID=UUID_FROM_ABOVE:luks:allow-discards root=/dev/mapper/luks rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep" >> /boot/loader/entries/arch.conf
+    echo "options cryptdevice=UUID=UUID_FROM_ABOVE:luks:allow-discards root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep" >> /boot/loader/entries/arch.conf
 
     touch /boot/loader/loader.conf
 
