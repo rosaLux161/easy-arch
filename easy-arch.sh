@@ -425,15 +425,15 @@ arch-chroot /mnt /bin/bash -e <<EOF
     bootctl --path=/boot install
 
     touch /boot/loader/entries/arch.conf
-    title Arch Linux >> /boot/loader/entries/arch.conf
-    linux /vmlinuz-linux >> /boot/loader/entries/arch.conf
-    initrd /intel-ucode.img >> /boot/loader/entries/arch.conf
-    initrd /initramfs-linux.img >> /boot/loader/entries/arch.conf
-    options cryptdevice=UUID=UUID_FROM_ABOVE:luks:allow-discards root=/dev/mapper/luks rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep >> /boot/loader/entries/arch.conf
+    echo "title Arch Linux" >> /boot/loader/entries/arch.conf
+    echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+    echo "initrd /intel-ucode.img" >> /boot/loader/entries/arch.conf
+    echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+    echo "options cryptdevice=UUID=UUID_FROM_ABOVE:luks:allow-discards root=/dev/mapper/luks rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep" >> /boot/loader/entries/arch.conf
 
     touch /boot/loader/loader.conf
 
-    default arch >> /boot/loader/loader.conf
+    echo "default arch" >> /boot/loader/loader.conf
 
 EOF
 
