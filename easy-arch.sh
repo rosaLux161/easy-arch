@@ -298,6 +298,7 @@ network_installer
 info_print "Configuring /etc/mkinitcpio.conf."
 cat > /mnt/etc/mkinitcpio.conf <<EOF
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf kms block encrypt filesystems fsck)
+EOF
 
 # Configuring the system.
 info_print "Configuring the system (timezone, system clock, initramfs, Snapper, GRUB)."
