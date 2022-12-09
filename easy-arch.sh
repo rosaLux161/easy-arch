@@ -295,7 +295,10 @@ network_installer
 # Configuring /etc/mkinitcpio.conf.
 info_print "Configuring /etc/mkinitcpio.conf."
 cat > /mnt/etc/mkinitcpio.conf <<EOF
-HOOKS=(systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems)
+HOOKS=(systemd autodetect keyboard keymap sd-vconsole modconf block encrypt filesystems)
+
+
+new HOOKS=(base keyboard udev autodetect modconf block keymap encrypt btrfs filesystems resume)
 EOF
 
 # Setting up systemd-boot.
