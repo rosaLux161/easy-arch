@@ -57,41 +57,13 @@ virt_check () {
 
 # Selecting a kernel to install (function).
 kernel_selector () {
-    info_print "List of kernels:"
-    info_print "1) Stable: Vanilla Linux kernel with a few specific Arch Linux patches applied"
-    info_print "2) Hardened: A security-focused Linux kernel"
-    info_print "3) Longterm: Long-term support (LTS) Linux kernel"
-    info_print "4) Zen Kernel: A Linux kernel optimized for desktop usage"
-    input_print "Please select the number of the corresponding kernel (e.g. 1): " 
-    read -r kernel_choice
-    case $kernel_choice in
-        1 ) kernel="linux"
-            return 0;;
-        2 ) kernel="linux-hardened"
-            return 0;;
-        3 ) kernel="linux-lts"
-            return 0;;
-        4 ) kernel="linux-zen"
-            return 0;;
-        * ) error_print "You did not enter a valid selection, please try again."
-            return 1
-    esac
+    kernel="linux"
+    return 0
 }
 
 # Selecting a way to handle internet connection (function).
 network_selector () {
-    info_print "Network utilities:"
-    info_print "1) IWD: Utility to connect to networks written by Intel (WiFi-only, built-in DHCP client)"
-    info_print "2) NetworkManager: Universal network utility (both WiFi and Ethernet, highly recommended)"
-    info_print "3) wpa_supplicant: Utility with support for WEP and WPA/WPA2 (WiFi-only, DHCPCD will be automatically installed)"
-    info_print "4) dhcpcd: Basic DHCP client (Ethernet connections or VMs)"
-    info_print "5) I will do this on my own (only advanced users)"
-    input_print "Please select the number of the corresponding networking utility (e.g. 1): "
-    read -r network_choice
-    if ! ((1 <= network_choice <= 5)); then
-        error_print "You did not enter a valid selection, please try again."
-        return 1
-    fi
+    network_choice=2
     return 0
 }
 
@@ -119,67 +91,20 @@ network_installer () {
 
 # User enters a password for the LUKS Container (function).
 lukspass_selector () {
-    input_print "Please enter a password for the LUKS container (you're not going to see the password): "
-    read -r -s password
-    if [[ -z "$password" ]]; then
-        echo
-        error_print "You need to enter a password for the LUKS Container, please try again."
-        return 1
-    fi
-    echo
-    input_print "Please enter the password for the LUKS container again (you're not going to see the password): "
-    read -r -s password2
-    echo
-    if [[ "$password" != "$password2" ]]; then
-        error_print "Passwords don't match, please try again."
-        return 1
-    fi
+    password="1234"
     return 0
 }
 
 # Setting up a password for the user account (function).
 userpass_selector () {
-    input_print "Please enter name for a user account (enter empty to not create one): "
-    read -r username
-    if [[ -z "$username" ]]; then
-        return 0
-    fi
-    input_print "Please enter a password for $username (you're not going to see the password): "
-    read -r -s userpass
-    if [[ -z "$userpass" ]]; then
-        echo
-        error_print "You need to enter a password for $username, please try again."
-        return 1
-    fi
-    echo
-    input_print "Please enter the password again (you're not going to see it): " 
-    read -r -s userpass2
-    echo
-    if [[ "$userpass" != "$userpass2" ]]; then
-        echo
-        error_print "Passwords don't match, please try again."
-        return 1
-    fi
+    username="jan"
+    userpass="1234"
     return 0
 }
 
 # Setting up a password for the root account (function).
 rootpass_selector () {
-    input_print "Please enter a password for the root user (you're not going to see it): "
-    read -r -s rootpass
-    if [[ -z "$rootpass" ]]; then
-        echo
-        error_print "You need to enter a password for the root user, please try again."
-        return 1
-    fi
-    echo
-    input_print "Please enter the password again (you're not going to see it): " 
-    read -r -s rootpass2
-    echo
-    if [[ "$rootpass" != "$rootpass2" ]]; then
-        error_print "Passwords don't match, please try again."
-        return 1
-    fi
+    rootpass="1234"
     return 0
 }
 
@@ -197,12 +122,7 @@ microcode_detector () {
 
 # User enters a hostname (function).
 hostname_selector () {
-    input_print "Please enter the hostname: "
-    read -r hostname
-    if [[ -z "$hostname" ]]; then
-        error_print "You need to enter a hostname in order to continue."
-        return 1
-    fi
+    hostname="host01"
     return 0
 }
 
@@ -227,23 +147,8 @@ locale_selector () {
 
 # User chooses the console keyboard layout (function).
 keyboard_selector () {
-    input_print "Please insert the keyboard layout to use in console (enter empty to use US, or \"/\" to look up for keyboard layouts): "
-    read -r kblayout
-    case "$kblayout" in
-        '') kblayout="us"
-            info_print "The standard US keyboard layout will be used."
-            return 0;;
-        '/') localectl list-keymaps
-             clear
-             return 1;;
-        *) if ! localectl list-keymaps | grep -Fxq "$kblayout"; then
-               error_print "The specified keymap doesn't exist."
-               return 1
-           fi
-        info_print "Changing console layout to $kblayout."
-        loadkeys "$kblayout"
-        return 0
-    esac
+    loadkeys "de-latin1-nodeadkeys"
+    return 0
 }
 
 # Welcome screen.
