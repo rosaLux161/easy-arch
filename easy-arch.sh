@@ -338,6 +338,9 @@ arch-chroot /mnt /bin/bash -e <<EOF
     touch /boot/loader/loader.conf
     echo "default arch" >> /boot/loader/loader.conf
     
+    xfconf-query -c xsettings -p /Gdk/WindowScalingFactor -s 2
+    xfconf-query -c xfwm4 -p /general/theme -s Default-xhdpi
+    
     systemctl enable lxdm
 
 EOF
