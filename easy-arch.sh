@@ -395,4 +395,5 @@ done
 
 # Finishing up.
 info_print "Done, you may now wish to reboot (further changes can be done by chrooting into /mnt)."
+shutdown -r now
 exit
