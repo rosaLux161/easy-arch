@@ -297,7 +297,7 @@ network_installer
 # Configuring /etc/mkinitcpio.conf.
 info_print "Configuring /etc/mkinitcpio.conf."
 cat > /mnt/etc/mkinitcpio.conf <<EOF
-HOOKS=(base systemd autodetect keyboard sd-vconsole modconf kms block encrypt filesystems fsck)
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf kms block sd-encrypt filesystems fsck)
 EOF
 
 # Configuring the system.
