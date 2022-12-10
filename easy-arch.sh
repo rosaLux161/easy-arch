@@ -77,7 +77,7 @@ network_installer () {
             systemctl enable iwd --root=/mnt &>/dev/null
             ;;
         2 ) info_print "Installing and enabling NetworkManager."
-            pacstrap /mnt networkmanager network-manager-applet >/dev/null
+            pacstrap /mnt networkmanager network-manager-applet firefox >/dev/null
             systemctl enable NetworkManager --root=/mnt &>/dev/null
             ;;
         3 ) info_print "Installing and enabling wpa_supplicant and dhcpcd."
