@@ -266,7 +266,7 @@ microcode_detector
 
 # Pacstrap (setting up a base sytem onto the new root).
 info_print "Installing the base system (it may take a while)."
-pacstrap /mnt base "$kernel" "$microcode" linux-firmware "$kernel"-headers btrfs-progs rsync efibootmgr snapper reflector snap-pac zram-generator sudo &>/dev/null
+pacstrap /mnt base "$kernel" "$microcode" linux-firmware "$kernel"-headers btrfs-progs rsync efibootmgr snapper reflector snap-pac zram-generator sudo lxde-gtk3 lxdm-gtk3 &>/dev/null
 
 # Setting up the hostname.
 echo "$hostname" > /mnt/etc/hostname
@@ -338,7 +338,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     touch /boot/loader/loader.conf
     echo "default arch" >> /boot/loader/loader.conf
     
-    systemctl enable gdm
+    systemctl enable lxdm
 
 EOF
 
@@ -354,6 +354,8 @@ if [[ -n "$username" ]]; then
     info_print "Setting user password for $username."
     echo "$username:$userpass" | arch-chroot /mnt chpasswd
 fi
+
+exit
 
 # Boot backup hook.
 info_print "Configuring /boot backup when pacman transactions are made."
