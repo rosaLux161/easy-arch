@@ -304,6 +304,14 @@ EOF
 info_print "Configuring the system (timezone, system clock, initramfs, Snapper, GRUB)."
 arch-chroot /mnt /bin/bash -e <<EOF
 
+    # Installing AUR packages
+    git clone https://github.com/Jguer/yay.git
+    chown -R nobody yay
+    cd yay
+    sudo -u nobody makepkg
+    cd ..
+    pacman -U yay/*.tar.xz
+
     # Setting up timezone.
     ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
 
