@@ -304,7 +304,7 @@ EOF
 # Configuring the system.
 info_print "Configuring the system (timezone, system clock, initramfs, Snapper, GRUB)."
 
-cp post_install.sh /mnt/root/post_install.sh
+cp easy-arch/post_install.sh /mnt/root/post_install.sh
 
 arch-chroot /mnt /bin/bash -e "cd /root && bash post_install.sh"
 
