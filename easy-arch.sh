@@ -314,7 +314,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     sudo -u nobody makepkg >> /root/log.log
     cd .. >> /root/log.log
     pacman -U yay-bin/*.tar.zst >> /root/log.log
- 
+
     git clone https://aur.archlinux.org/plymouth.git >> /root/log.log
     chown -R nobody plymouth >> /root/log.log
     cd plymouth >> /root/log.log
