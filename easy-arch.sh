@@ -305,7 +305,7 @@ info_print "Configuring the system (timezone, system clock, initramfs, Snapper, 
 arch-chroot /mnt /bin/bash -e <<EOF
 
     # Installing AUR packages
-    git clone https://github.com/Jguer/yay.git
+    git clone https://aur.archlinux.org/yay-bin.git
     chown -R nobody yay
     cd yay
     sudo -u nobody makepkg
