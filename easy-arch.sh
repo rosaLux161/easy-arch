@@ -298,6 +298,7 @@ network_installer
 info_print "Configuring /etc/mkinitcpio.conf."
 cat > /mnt/etc/mkinitcpio.conf <<EOF
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf kms block sd-encrypt filesystems fsck)
+MODULES=(i915)
 EOF
 
 # Configuring the system.
@@ -311,6 +312,20 @@ arch-chroot /mnt /bin/bash -e <<EOF
     sudo -u nobody makepkg
     cd ..
     pacman -U yay-bin/*.tar.zst
+ 
+    git clone https://aur.archlinux.org/plymouth.git
+    chown -R nobody plymouth
+    cd plymouth
+    sudo -u nobody makepkg
+    cd ..
+    pacman -U plymouth/*.tar.zst
+
+    git clone https://aur.archlinux.org/plymouth-theme-arch-charge.git
+    chown -R nobody plymouth-theme-arch-charge
+    cd plymouth-theme-arch-charge
+    sudo -u nobody makepkg
+    cd ..
+    pacman -U plymouth-theme-arch-charge/*.tar.zst
 
     # Setting up timezone.
     ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
@@ -341,7 +356,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
     echo "initrd /intel-ucode.img" >> /boot/loader/entries/arch.conf
     echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-    echo "options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep" >> /boot/loader/entries/arch.conf
+    echo "options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard rw mem_sleep_default=deep quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0" >> /boot/loader/entries/arch.conf
 
     touch /boot/loader/loader.conf
     echo "default arch" >> /boot/loader/loader.conf
