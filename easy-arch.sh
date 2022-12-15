@@ -306,11 +306,11 @@ arch-chroot /mnt /bin/bash -e <<EOF
 
     # Installing AUR packages
     git clone https://aur.archlinux.org/yay-bin.git
-    chown -R nobody yay
-    cd yay
+    chown -R nobody yay-bin
+    cd yay-bin
     sudo -u nobody makepkg
     cd ..
-    pacman -U yay/*.tar.xz
+    pacman -U yay-bin/*.tar.zst
 
     # Setting up timezone.
     ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
