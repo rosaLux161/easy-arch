@@ -309,25 +309,25 @@ arch-chroot /mnt /bin/bash -e <<EOF
 
     # Installing AUR packages
     git clone https://aur.archlinux.org/yay-bin.git > /root/log.log
-    chown -R nobody yay-bin > /root/log.log
-    cd yay-bin > /root/log.log
-    sudo -u nobody makepkg > /root/log.log
-    cd .. > /root/log.log
-    pacman -U yay-bin/*.tar.zst > /root/log.log
+    chown -R nobody yay-bin >> /root/log.log
+    cd yay-bin >> /root/log.log
+    sudo -u nobody makepkg >> /root/log.log
+    cd .. >> /root/log.log
+    pacman -U yay-bin/*.tar.zst >> /root/log.log
  
-    git clone https://aur.archlinux.org/plymouth.git > /root/log.log
-    chown -R nobody plymouth > /root/log.log
-    cd plymouth > /root/log.log
-    sudo -u nobody makepkg > /root/log.log
-    cd .. > /root/log.log
-    pacman -U plymouth/*.tar.zst > /root/log.log
+    git clone https://aur.archlinux.org/plymouth.git >> /root/log.log
+    chown -R nobody plymouth >> /root/log.log
+    cd plymouth >> /root/log.log
+    sudo -u nobody makepkg >> /root/log.log
+    cd .. >> /root/log.log
+    pacman -U plymouth/*.tar.zst >> /root/log.log
 
-    git clone https://aur.archlinux.org/plymouth-theme-arch-charge.git > /root/log.log
-    chown -R nobody plymouth-theme-arch-charge > /root/log.log
-    cd plymouth-theme-arch-charge > /root/log.log
-    sudo -u nobody makepkg > /root/log.log
-    cd .. > /root/log.log
-    pacman -U plymouth-theme-arch-charge/*.tar.zst > /root/log.log
+    git clone https://aur.archlinux.org/plymouth-theme-arch-charge.git >> /root/log.log
+    chown -R nobody plymouth-theme-arch-charge >> /root/log.log
+    cd plymouth-theme-arch-charge >> /root/log.log
+    sudo -u nobody makepkg >> /root/log.log
+    cd .. >> /root/log.log
+    pacman -U plymouth-theme-arch-charge/*.tar.zst >> /root/log.log
 
     # Setting up timezone.
     ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
@@ -339,7 +339,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     locale-gen &>/dev/null
 
     # Generating a new initramfs.
-    mkinitcpio -P &>/dev/null > /root/log.log
+    mkinitcpio -P &>/dev/null >> /root/log.log
 
     # Snapper configuration.
     umount /.snapshots
@@ -351,7 +351,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     chmod 750 /.snapshots
 
     # Installing systemd-boot.
-    bootctl --path=/boot install > /root/log.log
+    bootctl --path=/boot install >> /root/log.log
 
     touch /boot/loader/entries/arch.conf
     echo "title Arch Linux" >> /boot/loader/entries/arch.conf
