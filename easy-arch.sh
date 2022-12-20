@@ -267,6 +267,8 @@ microcode_detector
 # Pacstrap (setting up a base sytem onto the new root).
 info_print "Installing the base system (it may take a while)."
 pacman-key --refresh-keys
+# User choses the locale.
+until locale_selector; do : ; done
 pacstrap /mnt base "$kernel" "$microcode" base-devel linux-firmware "$kernel"-headers btrfs-progs rsync efibootmgr snapper reflector snap-pac zram-generator sudo xfce4 lxdm-gtk3 git &>/dev/null
 
 # Setting up the hostname.
