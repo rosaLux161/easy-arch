@@ -3,6 +3,7 @@ locale="en_US.UTF-8"
 BTRFS="/dev/mapper/cryptroot"
 ESP="/dev/disk/by-partlabel/ESP"
 cryptroot="/dev/disk/by-partlabel/cryptroot"
+subvols=(snapshots var_pkgs var_log home root srv)
 
 # Setting up keyboard layout.
 loadkeys de-latin1-nodeadkeys
