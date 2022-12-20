@@ -323,7 +323,7 @@ fi
 cp easy-arch/reboot_install.sh /mnt/home/jan/reboot_install.sh
 chown 777 /mnt/home/jan/reboot_install.sh
 
-shutdown -r now
+# shutdown -r now
 exit
 
 #########################
