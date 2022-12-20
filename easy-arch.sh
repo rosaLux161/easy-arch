@@ -1,6 +1,6 @@
 #!/usr/bin/env -S bash -e
 
-set -x
+set +x
 
 # Fixing annoying issue that breaks GitHub Actions
 # shellcheck disable=SC2001
@@ -166,8 +166,6 @@ echo -ne "${BOLD}${BYELLOW}
 ${RESET}"
 info_print "Welcome to easy-arch, a script made in order to simplify the process of installing Arch Linux."
 
-pacman-key --refresh-keys
-
 # Setting up keyboard layout.
 until keyboard_selector; do : ; done
 
@@ -268,6 +266,7 @@ microcode_detector
 
 # Pacstrap (setting up a base sytem onto the new root).
 info_print "Installing the base system (it may take a while)."
+pacman-key --refresh-keys
 pacstrap /mnt base "$kernel" "$microcode" base-devel linux-firmware "$kernel"-headers btrfs-progs rsync efibootmgr snapper reflector snap-pac zram-generator sudo xfce4 lxdm-gtk3 git &>/dev/null
 
 # Setting up the hostname.
