@@ -264,6 +264,8 @@ mount "$ESP" /mnt/boot/
 # Checking the microcode to install.
 microcode_detector
 
+exit
+
 # Pacstrap (setting up a base sytem onto the new root).
 info_print "Installing the base system (it may take a while)."
 pacman-key --refresh-keys
