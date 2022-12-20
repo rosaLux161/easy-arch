@@ -1,8 +1,8 @@
-1_part.sh
-2_mount.sh
-3_pacstrap.sh
-4_config.sh
-5_network.sh
-6_mkinit.sh
-7_chroot.sh
-9_users.sh
+bash ./1_part.sh
+bash ./2_mount.sh
+bash ./3_pacstrap.sh
+bash ./4_config.sh
+bash ./5_network.sh
+bash ./6_mkinit.sh
+bash ./7_chroot.sh
+bash ./9_users.sh
