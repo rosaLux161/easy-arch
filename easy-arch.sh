@@ -297,8 +297,7 @@ network_installer
 # Configuring /etc/mkinitcpio.conf.
 info_print "Configuring /etc/mkinitcpio.conf."
 cat > /mnt/etc/mkinitcpio.conf <<EOF
-HOOKS=(base systemd sd-plymouth autodetect keyboard sd-vconsole modconf kms block sd-encrypt filesystems fsck)
-MODULES=(i915)
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf kms block sd-encrypt filesystems fsck)
 EOF
 
 # Configuring the system.
@@ -321,8 +320,18 @@ if [[ -n "$username" ]]; then
     echo "$username:$userpass" | arch-chroot /mnt chpasswd
 fi
 
+cp easy-arch/reboot_install.sh /mnt/home/jan/reboot_install.sh
+chown 777 /mnt/home/jan/reboot_install.sh
+
+shutdown -r now
 exit
 
+#########################
+#########################
+#########################
+#########################
+#########################
+#########################
 # Boot backup hook.
 info_print "Configuring /boot backup when pacman transactions are made."
 mkdir /mnt/etc/pacman.d/hooks
@@ -361,5 +370,5 @@ done
 
 # Finishing up.
 info_print "Done, you may now wish to reboot (further changes can be done by chrooting into /mnt)."
-shutdown -r now
+
 exit
