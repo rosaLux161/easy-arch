@@ -23,4 +23,4 @@ echo "options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot ro
 touch /boot/loader/loader.conf
 echo "default arch" >> /boot/loader/loader.conf
 
-systemctl enable lxdm
+systemctl enable gdm
