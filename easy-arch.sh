@@ -166,6 +166,8 @@ echo -ne "${BOLD}${BYELLOW}
 ${RESET}"
 info_print "Welcome to easy-arch, a script made in order to simplify the process of installing Arch Linux."
 
+pacman-key --refresh-keys
+
 # Setting up keyboard layout.
 until keyboard_selector; do : ; done
 
