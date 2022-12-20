@@ -1,11 +1,4 @@
-DISK=/dev/nvme0n1
 locale="en_US.UTF-8"
-BTRFS="/dev/mapper/cryptroot"
-ESP="/dev/disk/by-partlabel/ESP"
-cryptroot="/dev/disk/by-partlabel/cryptroot"
-
-# Setting up keyboard layout.
-loadkeys de-latin1-nodeadkeys
 
 # Setting up the hostname.
 echo host01 > /mnt/etc/hostname
@@ -25,4 +18,4 @@ cat > /mnt/etc/hosts <<EOF
 127.0.1.1   host01.localdomain   host01
 EOF
 
-cp easy-arch/steps/8_chroot_install.sh /mnt/root/8_chroot_install.sh
+cp 8_chroot_install.sh /mnt/root/8_chroot_install.sh
